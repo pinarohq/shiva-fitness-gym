@@ -216,7 +216,7 @@ html{scroll-behavior:smooth}
 .section--tall{min-height:100vh}
 
 /* ============ 01 HERO ============ */
-.hero{min-height:100vh;padding-top:calc(5.5rem + 10px);padding-bottom:2rem;align-items:flex-start;overflow:hidden}
+.hero{min-height:100vh;padding-top:calc(6rem + 30px);padding-bottom:2rem;align-items:flex-start;overflow:hidden}
 .hero-grid{
   display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:end;width:100%;
 }
