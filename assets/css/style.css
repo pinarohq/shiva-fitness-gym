@@ -524,11 +524,14 @@ html{scroll-behavior:smooth}
 .gallery-tile{
   background:linear-gradient(150deg,#1b1b1b,#0a0a0a 75%);
   border:1px solid var(--hairline);position:relative;overflow:hidden;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
 }
 .gallery-tile::after{
-  content:attr(data-label);
-  position:absolute;bottom:.6rem;left:.75rem;
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);
+  display:none;
 }
 .gallery-tile:nth-child(1){grid-column:span 3;grid-row:span 2}
 .gallery-tile:nth-child(2){grid-column:span 2;grid-row:span 3}
