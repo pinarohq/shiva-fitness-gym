@@ -1,7 +1,7 @@
 /* =========================================================
    SHIVA FITNESS — CINEMATIC 3D EXPERIENCE v2
-   GLB dumbbell + rigged hand, GSAP ScrollTrigger choreography
-   Premium studio lighting, scroll-driven release & catch
+   GLB dumbbell, GSAP ScrollTrigger choreography
+   Premium studio lighting, scroll-driven path
    ========================================================= */
 (function () {
   'use strict';
@@ -36,11 +36,9 @@
   camera.position.set(0, 0, 6);
 
   /* ---------- studio lighting — premium product shoot ---------- */
-  // Soft ambient
   var ambient = new THREE.AmbientLight(0xffffff, 0.25);
   scene.add(ambient);
 
-  // Key light — strong soft-box from upper-left
   var key = new THREE.DirectionalLight(0xfff5e4, 2.2);
   key.position.set(-4, 6, 5);
   key.castShadow = true;
@@ -48,22 +46,18 @@
   key.shadow.radius = 8;
   scene.add(key);
 
-  // Fill light — cool ice-blue from opposite side
   var fill = new THREE.DirectionalLight(0xcfe8f2, 0.9);
   fill.position.set(6, 2, 3);
   scene.add(fill);
 
-  // Rim light — sharp highlight from behind
   var rim = new THREE.DirectionalLight(0xffffff, 1.4);
   rim.position.set(1, 3, -7);
   scene.add(rim);
 
-  // Ground bounce — subtle warm fill from below
   var bounce = new THREE.DirectionalLight(0xf0e8d8, 0.4);
   bounce.position.set(0, -5, 2);
   scene.add(bounce);
 
-  // Top hair light — separation from background
   var hair = new THREE.DirectionalLight(0xe8f0f5, 0.7);
   hair.position.set(0, 8, 0);
   scene.add(hair);
@@ -75,8 +69,8 @@
   scene.environment = neutralEnv;
   pmremGenerator.dispose();
 
-  /* ---------- groups ---------- */
-  var dbGroup = new THREE.Group(); // dumbbell
+  /* ---------- dumbbell group ---------- */
+  var dbGroup = new THREE.Group();
   scene.add(dbGroup);
 
   var dbMixer = null;
@@ -92,21 +86,18 @@
       if (child.isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
-        // Upgrade materials for premium look
         if (child.material) {
           child.material.envMapIntensity = 1.6;
           child.material.needsUpdate = true;
         }
       }
     });
-    // Normalize scale
     var box = new THREE.Box3().setFromObject(model);
     var size = new THREE.Vector3();
     box.getSize(size);
     var maxDim = Math.max(size.x, size.y, size.z);
     var targetSize = 1.8;
     model.scale.setScalar(targetSize / maxDim);
-    // Center pivot
     var center = new THREE.Vector3();
     box.getCenter(center);
     model.position.sub(center.multiplyScalar(targetSize / maxDim));
@@ -168,7 +159,7 @@
   }
 
   /* ---------- scroll state ---------- */
-  var scrollProgress = 0; // 0..1 across full page
+  var scrollProgress = 0;
 
   function updateScrollProgress() {
     var doc = document.documentElement;
@@ -179,7 +170,7 @@
   window.addEventListener('scroll', updateScrollProgress, { passive: true });
   updateScrollProgress();
 
-  /* ---------- section offsets (for progress bar) ---------- */
+  /* ---------- progress bar ---------- */
   var progressEl = document.querySelector('.progress');
 
   function updateProgressBar() {
@@ -195,8 +186,6 @@
   /* ---------- easing helpers ---------- */
   function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function lerp(a, b, t) { return a + (b - a) * t; }
-  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-
 
   /* ---------- spring physics ---------- */
   function Spring(v, stiff, damp) {
@@ -212,7 +201,6 @@
     this.value += this.vel;
   };
 
-  // Dumbbell springs
   var sp = {
     x:  new Spring(0.5),
     y:  new Spring(-0.05),
@@ -241,46 +229,36 @@
 
   /* ==============================================================
      CINEMATIC SCROLL WAYPOINTS
-     Page is divided into 12 sections (0..11).
-     scrollProgress 0..1 maps to sections via linear segments.
-     
-     DUMBBELL PATH — travels around content, never over CTAs.
-     The path snakes: right → left corner → right near → 
-     upper-left → far right edge → lower right → left edge →
-     right near → left corner → right → right-lower → CENTER
+     12 sections, dumbbell travels around content, never over CTAs.
   ============================================================== */
-
-  // 12 waypoints, one per section. nx/ny in NDC (-1..1)
   var DB_WP = [
-    // 00 — HERO: right side, framing the headline, wrist area of hand is here
+    // 00 — HERO: right side, framing content
     { nx:  0.52, ny: -0.12, rx:  0.08, ry:  0.35, rz:  0.18, s: 1.1,  camZ: 5.2 },
-    // 01 — STAY: move to upper-left corner, small, distant
+    // 01 — STAY: upper-left corner
     { nx: -0.55, ny:  0.38, rx: -0.12, ry: -0.55, rz: -0.22, s: 0.55, camZ: 6.2 },
-    // 02 — PHILOSOPHY: behind text center — camZ pulled back so it reads under the copy
+    // 02 — PHILOSOPHY: behind text, centered-low
     { nx:  0.00, ny:  0.10, rx:  0.25, ry:  0.75, rz:  0.10, s: 0.80, camZ: 6.8 },
-    // 03 — PROGRAMS: center behind the grid, slightly larger, tucked under text
+    // 03 — PROGRAMS: behind cards
     { nx:  0.00, ny:  0.05, rx:  0.10, ry: -0.30, rz:  0.05, s: 0.52, camZ: 6.2 },
-    // 04 — COACH: slightly larger, shifted left ~10px and down ~5px equiv in NDC
+    // 04 — COACH: right edge
     { nx:  0.52, ny:  0.38, rx: -0.18, ry: -0.50, rz:  0.28, s: 0.52, camZ: 6.5 },
-    // 05 — DIFFERENT: behind text, overlay applied via CSS (20%)
+    // 05 — DIFFERENT: large, behind headline
     { nx:  0.00, ny:  0.00, rx:  0.30, ry:  1.20, rz:  0.00, s: 1.60, camZ: 4.8 },
-    // 06 — GALLERY: left side, cropped at edge — feels cut-off, cinematic
+    // 06 — GALLERY: left edge
     { nx: -0.72, ny:  0.08, rx: -0.22, ry: -0.80, rz: -0.15, s: 0.95, camZ: 5.0 },
-    // 07 — TESTIMONIALS: upper right corner, soft and small
+    // 07 — TESTIMONIALS: upper-right
     { nx:  0.58, ny:  0.44, rx:  0.08, ry:  0.60, rz:  0.12, s: 0.50, camZ: 6.4 },
-    // 08 — MEMBERSHIP: lower right, doesn't cover cards
+    // 08 — MEMBERSHIP: lower-right, behind cards
     { nx:  0.62, ny: -0.50, rx:  0.18, ry: -0.45, rz: -0.12, s: 0.70, camZ: 5.8 },
-    // 09 — SAFETY: behind text, center-left — pushed behind the copy
+    // 09 — SAFETY: left, behind text
     { nx: -0.12, ny:  0.08, rx: -0.10, ry:  0.30, rz:  0.08, s: 0.60, camZ: 6.0 },
-    // 10 — LOCATION: lower-left corner, out of the way
+    // 10 — LOCATION: lower-left corner
     { nx: -0.60, ny: -0.48, rx:  0.22, ry: -0.65, rz:  0.18, s: 0.45, camZ: 6.5 },
-    // 11 — BOOK (FINAL): behind scene, overlay 30% dims it — CTA is dominant
+    // 11 — BOOK (FINAL): centered, large, behind CTA
     { nx:  0.0,  ny:  0.05, rx:  0.10, ry:  0.40, rz:  0.05, s: 1.40, camZ: 4.8 },
   ];
 
-  // Section fraction boundaries (equal spacing)
-  var N = DB_WP.length; // 12
-
+  var N = DB_WP.length;
 
   /* ---------- update dumbbell targets from scroll ---------- */
   function updateDBTargets() {
@@ -302,31 +280,26 @@
     sp.s.target  = lerp(a.s,  b.s,  t);
     sp.cz.target = camZ;
 
-    // Camera X parallax (subtle orbit)
     sp.cx.target = lerp(a.nx, b.nx, t) * 0.15;
   }
 
-  var autoRotY = 0;
-  var time = 0;
-
-  /* ---------- overlay ---------- */
-  var overlayEl = document.getElementById('scene-overlay');
+  /* ---------- overlays ---------- */
+  var overlayEl     = document.getElementById('scene-overlay');
   var heroOverlayEl = document.getElementById('hero-overlay');
 
-  // Per-waypoint overlay opacity (0..1). Applied when that waypoint is active.
   var DB_OVERLAY = [
     0,    // 00 hero
     0,    // 01 stay
     0,    // 02 philosophy
     0,    // 03 programs
     0,    // 04 coach
-    0.20, // 05 different — 20% dark veil, text rides above
+    0.20, // 05 different
     0,    // 06 gallery
     0,    // 07 testimonials
     0,    // 08 membership
     0,    // 09 safety
     0,    // 10 location
-    0.30, // 11 book/ready — 30% dark veil, CTA is the brightest element
+    0.30, // 11 book/ready
   ];
 
   function updateOverlay() {
@@ -341,9 +314,7 @@
 
   function updateHeroOverlay() {
     if (!heroOverlayEl) return;
-    // Hero overlay is active only in section 00 (hero), which spans scroll 0.0 to ~0.083
-    // Start fading in at scroll 0, fade out around scroll 0.083
-    var heroEnd = 1.0 / (N - 1); // ~0.1 (section boundary)
+    var heroEnd = 1.0 / (N - 1);
     if (scrollProgress < heroEnd) {
       heroOverlayEl.classList.add('hero-active');
     } else {
@@ -353,6 +324,8 @@
 
   /* ---------- render loop ---------- */
   var clock = new THREE.Clock();
+  var autoRotY = 0;
+  var time = 0;
 
   function animate() {
     requestAnimationFrame(animate);
@@ -361,20 +334,16 @@
 
     if (dbMixer) dbMixer.update(delta);
 
-    // Compute scroll targets
     updateDBTargets();
     updateOverlay();
     updateHeroOverlay();
 
-    // Step all springs
     var allSprings = [sp.x, sp.y, sp.rx, sp.ry, sp.rz, sp.s, sp.cz, sp.cx];
     allSprings.forEach(function (s) { s.step(); });
 
-    // Mouse parallax (subtle)
     var mx = reduceMotion ? 0 : mouseX * 0.10;
     var my = reduceMotion ? 0 : mouseY * 0.07;
 
-    // Apply to dumbbell
     dbGroup.position.x = sp.x.value + mx;
     dbGroup.position.y = sp.y.value - my + (reduceMotion ? 0 : Math.sin(time * 0.55) * 0.025);
 
@@ -384,7 +353,6 @@
     dbGroup.rotation.z = sp.rz.value;
     dbGroup.scale.setScalar(sp.s.value);
 
-    // Camera subtle orbit
     camera.position.z = sp.cz.value;
     camera.position.x += (sp.cx.value + mx * 0.2 - camera.position.x) * 0.04;
     camera.position.y += (-my * 0.15 - camera.position.y) * 0.04;
@@ -403,4 +371,3 @@
   animate();
 
 })();
-

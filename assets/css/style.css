@@ -216,7 +216,7 @@ html{scroll-behavior:smooth}
 .section--tall{min-height:100vh}
 
 /* ============ 01 HERO ============ */
-.hero{min-height:100vh;padding-top:calc(7rem + 10px);padding-bottom:8rem;align-items:flex-start;overflow:hidden}
+.hero{min-height:100vh;padding-top:calc(5.5rem + 10px);padding-bottom:2rem;align-items:flex-start;overflow:hidden}
 .hero-grid{
   display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:end;width:100%;
 }
@@ -250,11 +250,12 @@ html{scroll-behavior:smooth}
 }
 
 /* --- paragraph --- */
-.hero-copy .h-xl{margin-top:1rem}
+.hero-copy .h-xl{margin-top:0.8rem}
 .hero-copy p.text-muted--lg{
-  font-size:16px;
-  opacity:0.75;
-  margin-top:1.25rem;
+  font-size:15px;
+  opacity:0.70;
+  margin-top:1.2rem;
+  line-height:1.6;
 }
 .hero .eyebrow--ice{
   opacity:1;
@@ -263,8 +264,8 @@ html{scroll-behavior:smooth}
 /* --- CTA button premium states --- */
 .hero-cta{
   position:relative;
-  margin-top:1.8rem;
-  margin-bottom:1.5rem;
+  margin-top:1.6rem;
+  margin-bottom:1rem;
   overflow:hidden;
   isolation:isolate;
 }
@@ -299,7 +300,7 @@ html{scroll-behavior:smooth}
 
 /* --- stats --- */
 .hero-stats{
-  display:flex;gap:3rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--hairline);
+  display:flex;gap:3rem;margin-top:1.8rem;padding-top:1.8rem;border-top:1px solid var(--hairline);
 }
 .hero-stat{
   position:relative;
@@ -404,22 +405,23 @@ html{scroll-behavior:smooth}
 
 /* ---- desktop-only hero adjustments (min-width: 901px) ---- */
 @media (min-width:901px){
-  /* Reduce headline size — tighten the max clamp value */
+  /* Tighten headline size for desktop */
   .hero-copy .h-xl{
-    font-size:clamp(56px, 8vw, 112px);
+    font-size:clamp(56px, 7.5vw, 108px);
   }
-  /* Less gap between CTA and stats */
+  /* CTA breathing room */
   .hero-cta{
-    margin-bottom:0.5rem;
+    margin-top:1.8rem;
+    margin-bottom:0.6rem;
   }
-  /* Pull stats closer to CTA */
+  /* Stats tight to CTA */
   .hero-stats{
-    margin-top:2rem;
-    padding-top:1.75rem;
+    margin-top:1.6rem;
+    padding-top:1.6rem;
   }
-  /* Reduce bottom padding so stats line is just visible on first load */
+  /* Hero bottom padding — keeps scroll hint visible but not excessive */
   .hero{
-    padding-bottom:4rem;
+    padding-bottom:1.5rem;
   }
 }
 
@@ -657,6 +659,10 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--ice);outline-offse
   }
   .hero-copy-mobile{
     display:block;
+  }
+  /* Shrink headline so all 3 lines fit on screen */
+  .hero .h-xl{
+    font-size:clamp(44px, 15vw, 64px);
   }
 }
 

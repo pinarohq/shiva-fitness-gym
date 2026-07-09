@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Free Trial — Shiva Fitness Gym</title>
+<meta name="description" content="Claim your free trial at Shiva Fitness Gym, Kaimri Road, Hisar. Takes 60 seconds. No credit card, no commitment.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23050505'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial Black,sans-serif' font-size='14' fill='%23cfe8f2'%3ESF%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg:          #050505;
+  --surface:     #0c0c0c;
+  --card:        #141414;
+  --card-hi:     #1a1a1a;
+  --accent:      #cfe8f2;
+  --accent-dim:  rgba(207,232,242,0.10);
+  --accent-glow: rgba(207,232,242,0.18);
+  --white:       #f5f5f3;
+  --muted:       #757572;
+  --success:     #22C55E;
+  --error:       #FF3D2E;
+  --border:      rgba(255,255,255,0.06);
+  --border-hi:   rgba(255,255,255,0.11);
+  --input-bg:    #080808;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   AMBIENT BACKGROUND
+   ============================================================ */
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+}
+
+.bg-blob-1 {
+  width: 600px;
+  height: 600px;
+  background: #cfe8f2;
+  opacity: 0.08;
+  top: -200px;
+  right: -200px;
+  animation: float1 14s ease-in-out infinite alternate;
+}
+
+.bg-blob-2 {
+  width: 400px;
+  height: 400px;
+  background: #2f6f5e;
+  opacity: 0.10;
+  bottom: -100px;
+  left: -100px;
+  animation: float2 18s ease-in-out infinite alternate;
+}
+
+@keyframes float1 {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(-60px, 40px) scale(1.1); }
+}
+@keyframes float2 {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(40px,-60px) scale(1.08); }
+}
+
+/* grain overlay */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(5,5,5,0.7);
+  backdrop-filter: blur(16px);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.logo span { color: var(--accent); }
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--white); }
+
+.back-arrow {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.back-link:hover .back-arrow { border-color: var(--accent); color: var(--accent); }
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+.page-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 64px;
+  align-items: start;
+}
+
+/* ============================================================
+   LEFT PANEL — Context / Trust
+   ============================================================ */
+.left-panel {
+  padding-top: 8px;
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 18px;
+}
+
+.left-panel h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(52px, 6vw, 80px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.left-panel h1 span { color: var(--accent); }
+
+.left-panel .subtitle {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 400px;
+  margin-bottom: 48px;
+}
+
+/* Trial benefits list */
+.trial-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 48px;
+}
+
+.trial-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.benefit-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(207,232,242,0.15);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.trial-benefit h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.trial-benefit p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* Testimonial pull-quote */
+.left-quote {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 24px 24px 24px 26px;
+}
+
+.left-quote p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(245,245,243,0.8);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.left-quote-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #050505;
+  flex-shrink: 0;
+}
+
+.author-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.author-role {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+.stars span { color: var(--accent); font-size: 13px; }
+
+/* ============================================================
+   RIGHT PANEL — The Form Card
+   ============================================================ */
+.form-card {
+  background: var(--card);
+  border: 1px solid var(--border-hi);
+  border-radius: 8px;
+  overflow: hidden;
+  position: sticky;
+  top: 30px;
+}
+
+/* Progress bar */
+.progress-track {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 33.333%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  background: linear-gradient(90deg, transparent, rgba(207,232,242,0.5));
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Step indicators */
+.step-indicators {
+  display: flex;
+  align-items: center;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+
+.step-ind {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.step-ind:last-child { flex: 0; }
+
+.step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border-hi);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: all 0.3s;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.step-dot.active {
+  border-color: var(--accent);
+  color: #050505;
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.step-dot.done {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.step-dot.done::after { content: '✓'; }
+.step-dot.done .step-num { display: none; }
+
+.step-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+}
+
+.step-ind.active .step-label { color: var(--white); }
+
+.step-connector {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 12px;
+}
+
+/* Form steps */
+.form-steps-wrap {
+  padding: 28px;
+  overflow: hidden;
+}
+
+.form-step {
+  display: none;
+  animation: stepIn 0.35s ease forwards;
+}
+
+.form-step.active { display: block; }
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.step-heading {
+  margin-bottom: 24px;
+}
+
+.step-heading h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.step-heading p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   FORM FIELDS
+   ============================================================ */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.field-wrap {
+  position: relative;
+}
+
+.field-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  pointer-events: none;
+  z-index: 1;
+  color: var(--muted);
+}
+
+.field-status {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border-hi);
+  border-radius: 5px;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 13px 42px 13px 42px;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23757572' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.field textarea {
+  resize: none;
+  height: 80px;
+  padding-top: 13px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: #2a2a2a; }
+
+.field select option { background: #141414; color: var(--white); }
+
+/* focus */
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  background: #0c0c0c;
+  box-shadow: 0 0 0 3px rgba(207,232,242,0.10);
+}
+
+/* valid */
+.field.valid input,
+.field.valid select {
+  border-color: var(--success);
+}
+
+.field.valid .field-status { opacity: 1; color: var(--success); }
+
+/* error */
+.field.error input,
+.field.error select {
+  border-color: var(--error);
+  background: rgba(255,61,46,0.04);
+}
+
+.field.error .field-status { opacity: 1; color: var(--error); }
+
+.field-error-msg {
+  font-size: 11px;
+  color: var(--error);
+  margin-top: 4px;
+  display: none;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.field.error .field-error-msg { display: block; }
+
+/* Phone with country code */
+.phone-row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.phone-code {
+  background: var(--input-bg);
+  border: 1.5px solid var(--border-hi);
+  border-radius: 5px;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 13px 10px;
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   TIME SLOT GRID
+   ============================================================ */
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.time-slot {
+  background: var(--input-bg);
+  border: 1.5px solid var(--border-hi);
+  border-radius: 5px;
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.time-slot:hover {
+  border-color: rgba(207,232,242,0.3);
+  background: var(--accent-dim);
+}
+
+.time-slot.selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: 0 0 0 3px rgba(207,232,242,0.08);
+}
+
+.time-slot .time-main {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+}
+
+.time-slot .time-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-top: 2px;
+}
+
+.time-slot.selected .time-main { color: var(--accent); }
+.time-slot.selected .time-sub  { color: rgba(207,232,242,0.6); }
+
+/* ============================================================
+   SERVICE CHECKBOXES
+   ============================================================ */
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.service-check {
+  position: relative;
+}
+
+.service-check input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.service-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border-hi);
+  border-radius: 5px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.service-label:hover {
+  border-color: rgba(207,232,242,0.3);
+  background: var(--accent-dim);
+}
+
+.service-check input:checked + .service-label {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: 0 0 0 3px rgba(207,232,242,0.07);
+}
+
+.service-icon-sm {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.service-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.service-check input:checked + .service-label .service-name {
+  color: var(--accent);
+}
+
+/* checkbox tick box */
+.tick-box {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-hi);
+  border-radius: 3px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.service-check input:checked + .service-label .tick-box {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #050505;
+}
+
+/* ============================================================
+   STEP 3 — REVIEW
+   ============================================================ */
+.review-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 12px;
+}
+
+.review-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.review-row:last-child { border-bottom: none; padding-bottom: 0; }
+.review-row:first-of-type { padding-top: 0; }
+
+.review-key {
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.review-val {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--white);
+  word-break: break-word;
+}
+
+.review-services-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-end;
+}
+
+.service-chip {
+  background: var(--accent-dim);
+  border: 1px solid rgba(207,232,242,0.15);
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.privacy-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.privacy-note span { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+/* ============================================================
+   NAVIGATION BUTTONS
+   ============================================================ */
+.form-nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-next, .btn-back, .btn-submit {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  padding: 14px 24px;
+}
+
+.btn-next {
+  background: var(--accent);
+  color: #050505;
+  flex: 1;
+  justify-content: center;
+}
+
+.btn-next:hover {
+  background: var(--white);
+  box-shadow: 0 8px 32px rgba(207,232,242,0.20);
+  transform: translateY(-2px);
+}
+
+.btn-next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-back {
+  background: transparent;
+  color: var(--muted);
+  border: 1.5px solid var(--border-hi);
+  padding: 14px 18px;
+}
+
+.btn-back:hover {
+  border-color: var(--border-hi);
+  color: var(--white);
+}
+
+.btn-submit {
+  background: var(--accent);
+  color: #050505;
+  flex: 1;
+  justify-content: center;
+  font-size: 15px;
+  padding: 16px 24px;
+}
+
+.btn-submit:hover {
+  background: var(--white);
+  box-shadow: 0 8px 36px rgba(207,232,242,0.20);
+  transform: translateY(-2px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(5,5,5,0.3);
+  border-top-color: #050505;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   SUCCESS STATE
+   ============================================================ */
+.success-screen {
+  display: none;
+  padding: 48px 28px;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon-wrap {
+  width: 80px;
+  height: 80px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 24px;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.success-screen h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 42px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.success-screen h2 span { color: var(--accent); }
+
+.success-screen p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 300px;
+  margin: 0 auto 32px;
+}
+
+.success-details {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.success-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  color: rgba(245,245,243,0.8);
+}
+
+.success-detail-row:last-child { border-bottom: none; }
+.success-detail-row strong { color: var(--accent); margin-right: auto; padding-left: 4px; }
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-whatsapp {
+  background: #22C55E;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-whatsapp:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+.btn-home {
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border-hi);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: all 0.2s;
+}
+
+.btn-home:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 24px;
+  z-index: 9999;
+  background: var(--card);
+  border: 1px solid var(--border-hi);
+  border-radius: 6px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 260px;
+  max-width: 360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+.toast-icon { font-size: 20px; flex-shrink: 0; }
+
+.toast.error { border-color: rgba(255,61,46,0.3); }
+.toast.success { border-color: rgba(34,197,94,0.3); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.form-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+}
+
+.form-footer p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.form-footer a { color: var(--accent); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .page-wrap {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 20px 80px;
+  }
+
+  .form-card { position: static; }
+
+  .left-panel h1 { font-size: clamp(44px, 12vw, 70px); }
+
+  .left-quote { display: none; }
+}
+
+@media (max-width: 480px) {
+  .time-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-grid { grid-template-columns: 1fr; }
+  .step-label { display: none; }
+  .form-steps-wrap { padding: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ambient -->
+<div class="bg-ambient" aria-hidden="true">
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+</div>
+<div class="bg-grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+   HEADER
+   ============================================================ -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Shiva Fitness home">Shiva<span>Fitness</span></a>
+    <a href="index.html" class="back-link" aria-label="Back to website">
+      <span class="back-arrow">←</span>
+      Back to site
+    </a>
+  </div>
+</header>
+
+<!-- ============================================================
+   PAGE CONTENT
+   ============================================================ -->
+<main class="page-wrap" id="main">
+
+  <!-- LEFT PANEL -->
+  <aside class="left-panel" aria-label="Why book a trial">
+    <span class="eyebrow">Free Trial — Zero Commitment</span>
+    <h1>START YOUR<br><span>JOURNEY</span><br>HERE.</h1>
+    <p class="subtitle">
+      One session is all it takes. Tell us a bit about yourself, pick a time, and show up. Rohit handles the rest.
+    </p>
+
+    <div class="trial-benefits" role="list" aria-label="Trial benefits">
+      <div class="trial-benefit" role="listitem">
+        <div class="benefit-icon" aria-hidden="true">🎯</div>
+        <div>
+          <h4>Full Gym Access</h4>
+          <p>Use every piece of equipment, join any class running that day — no restrictions.</p>
+        </div>
+      </div>
+      <div class="trial-benefit" role="listitem">
+        <div class="benefit-icon" aria-hidden="true">👨‍💼</div>
+        <div>
+          <h4>Coach Assessment by Rohit</h4>
+          <p>Rohit will sit with you, understand your goals, and build a personalised plan.</p>
+        </div>
+      </div>
+      <div class="trial-benefit" role="listitem">
+        <div class="benefit-icon" aria-hidden="true">🔒</div>
+        <div>
+          <h4>Zero Commitment</h4>
+          <p>No credit card. No sales pressure. If you love it, great. If not, no hard feelings.</p>
+        </div>
+      </div>
+      <div class="trial-benefit" role="listitem">
+        <div class="benefit-icon" aria-hidden="true">⚡</div>
+        <div>
+          <h4>Same-Day Confirmation</h4>
+          <p>Submit your details, get an email confirmation within minutes, walk in on the day.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-quote" role="complementary" aria-label="Member testimonial">
+      <div class="stars" aria-label="5 stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p>"I was skeptical about free trials. The Shiva Fitness one genuinely had no catch. I booked online, walked in, and left wanting to sign up immediately."</p>
+      <div class="left-quote-author">
+        <div class="author-avatar" aria-hidden="true">AM</div>
+        <div>
+          <div class="author-name">Amit Mehta</div>
+          <div class="author-role">Member · Joined Jan 2025</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL — FORM -->
+  <div class="form-card" role="main" aria-label="Booking form">
+
+    <!-- Progress -->
+    <div class="progress-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Step 1 of 3">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Step indicators -->
+    <div class="step-indicators" aria-label="Form steps">
+      <div class="step-ind active" id="stepInd1">
+        <div class="step-dot active" id="stepDot1"><span class="step-num">1</span></div>
+        <span class="step-label">You</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-ind" id="stepInd2">
+        <div class="step-dot" id="stepDot2"><span class="step-num">2</span></div>
+        <span class="step-label">Preferences</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-ind" id="stepInd3">
+        <div class="step-dot" id="stepDot3"><span class="step-num">3</span></div>
+        <span class="step-label">Confirm</span>
+      </div>
+    </div>
+
+    <!-- Form steps -->
+    <div class="form-steps-wrap">
+
+      <!-- ── STEP 1: Personal Info ── -->
+      <div class="form-step active" id="step1" aria-label="Step 1: Personal information">
+        <div class="step-heading">
+          <h2>Tell us about yourself.</h2>
+          <p>We'll use this to send your confirmation and reach out before your visit.</p>
+        </div>
+
+        <div class="field-group">
+          <div class="field" id="field-name">
+            <label for="inputName">Full Name</label>
+            <div class="field-wrap">
+              <span class="field-icon" aria-hidden="true">👤</span>
+              <input
+                type="text"
+                id="inputName"
+                name="name"
+                placeholder="e.g. Rahul Sharma"
+                autocomplete="name"
+                inputmode="text"
+                aria-required="true"
+                aria-describedby="name-error"
+              >
+              <span class="field-status" id="nameStatus" aria-hidden="true">✓</span>
+            </div>
+            <span class="field-error-msg" id="name-error" role="alert">Please enter your full name.</span>
+          </div>
+
+          <div class="field" id="field-email">
+            <label for="inputEmail">Email Address</label>
+            <div class="field-wrap">
+              <span class="field-icon" aria-hidden="true">✉️</span>
+              <input
+                type="email"
+                id="inputEmail"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                inputmode="email"
+                aria-required="true"
+                aria-describedby="email-error"
+              >
+              <span class="field-status" id="emailStatus" aria-hidden="true">✓</span>
+            </div>
+            <span class="field-error-msg" id="email-error" role="alert">Please enter a valid email address.</span>
+          </div>
+
+          <div class="field" id="field-phone">
+            <label for="inputPhone">Mobile Number</label>
+            <div class="phone-row">
+              <div class="phone-code" aria-label="India country code">🇮🇳 +91</div>
+              <div class="field-wrap" style="position:relative">
+                <input
+                  type="tel"
+                  id="inputPhone"
+                  name="phone"
+                  placeholder="98765 43210"
+                  autocomplete="tel"
+                  inputmode="numeric"
+                  maxlength="10"
+                  aria-required="true"
+                  aria-describedby="phone-error"
+                >
+                <span class="field-status" id="phoneStatus" aria-hidden="true">✓</span>
+              </div>
+            </div>
+            <span class="field-error-msg" id="phone-error" role="alert">Enter a valid 10-digit Indian mobile number.</span>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-next" id="nextBtn1" onclick="goStep(2)" aria-label="Continue to step 2">
+            Continue <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Preferences ── -->
+      <div class="form-step" id="step2" aria-label="Step 2: Your preferences">
+        <div class="step-heading">
+          <h2>What brings you in?</h2>
+          <p>Pick your ideal time and what you'd like to focus on — we'll have a trainer ready.</p>
+        </div>
+
+        <div class="field-group">
+          <div class="field" id="field-time">
+            <label>Preferred Visit Time</label>
+            <div class="time-grid" role="group" aria-label="Select a time slot">
+              <div class="time-slot" data-time="Early Morning" onclick="selectTime(this)" role="button" tabindex="0" aria-pressed="false">
+                <span class="time-main">6–8 AM</span>
+                <span class="time-sub">Early Bird</span>
+              </div>
+              <div class="time-slot" data-time="Morning" onclick="selectTime(this)" role="button" tabindex="0" aria-pressed="false">
+                <span class="time-main">8–11 AM</span>
+                <span class="time-sub">Morning</span>
+              </div>
+              <div class="time-slot" data-time="Afternoon" onclick="selectTime(this)" role="button" tabindex="0" aria-pressed="false">
+                <span class="time-main">11–2 PM</span>
+                <span class="time-sub">Afternoon</span>
+              </div>
+              <div class="time-slot" data-time="Post-Lunch" onclick="selectTime(this)" role="button" tabindex="0" aria-pressed="false">
+                <span class="time-main">2–5 PM</span>
+                <span class="time-sub">Post-Lunch</span>
+              </div>
+              <div class="time-slot" data-time="Evening" onclick="selectTime(this)" role="button" tabindex="0" aria-pressed="false">
+                <span class="time-main">5–8 PM</span>
+                <span class="time-sub">Evening</span>
+              </div>
+              <div class="time-slot" data-time="Late Evening" onclick="selectTime(this)" role="button" tabindex="0" aria-pressed="false">
+                <span class="time-main">8–10 PM</span>
+                <span class="time-sub">Late Eve</span>
+              </div>
+            </div>
+            <span class="field-error-msg" id="time-error" role="alert" style="display:none;margin-top:8px">Please select a preferred time slot.</span>
+          </div>
+
+          <div class="field" id="field-services">
+            <label>Services You're Interested In <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(select all that apply)</span></label>
+            <div class="service-grid" role="group" aria-label="Select services">
+              <div class="service-check">
+                <input type="checkbox" id="svc1" value="Strength Training">
+                <label class="service-label" for="svc1">
+                  <span class="service-icon-sm" aria-hidden="true">🏋️</span>
+                  <span class="service-name">Strength Training</span>
+                  <span class="tick-box" aria-hidden="true">✓</span>
+                </label>
+              </div>
+              <div class="service-check">
+                <input type="checkbox" id="svc2" value="Weight Loss">
+                <label class="service-label" for="svc2">
+                  <span class="service-icon-sm" aria-hidden="true">🔥</span>
+                  <span class="service-name">Weight Loss</span>
+                  <span class="tick-box" aria-hidden="true">✓</span>
+                </label>
+              </div>
+              <div class="service-check">
+                <input type="checkbox" id="svc3" value="Personal Training">
+                <label class="service-label" for="svc3">
+                  <span class="service-icon-sm" aria-hidden="true">🎯</span>
+                  <span class="service-name">Personal Training</span>
+                  <span class="tick-box" aria-hidden="true">✓</span>
+                </label>
+              </div>
+              <div class="service-check">
+                <input type="checkbox" id="svc4" value="Nutrition Coaching">
+                <label class="service-label" for="svc4">
+                  <span class="service-icon-sm" aria-hidden="true">🥗</span>
+                  <span class="service-name">Nutrition Coaching</span>
+                  <span class="tick-box" aria-hidden="true">✓</span>
+                </label>
+              </div>
+              <div class="service-check">
+                <input type="checkbox" id="svc5" value="Group Classes">
+                <label class="service-label" for="svc5">
+                  <span class="service-icon-sm" aria-hidden="true">👥</span>
+                  <span class="service-name">Group Classes</span>
+                  <span class="tick-box" aria-hidden="true">✓</span>
+                </label>
+              </div>
+              <div class="service-check">
+                <input type="checkbox" id="svc6" value="Functional Fitness">
+                <label class="service-label" for="svc6">
+                  <span class="service-icon-sm" aria-hidden="true">⚡</span>
+                  <span class="service-name">Functional Fitness</span>
+                  <span class="tick-box" aria-hidden="true">✓</span>
+                </label>
+              </div>
+            </div>
+            <span class="field-error-msg" id="services-error" role="alert" style="display:none;margin-top:8px">Please select at least one service.</span>
+          </div>
+
+          <div class="field">
+            <label for="inputGoal">Your Main Goal <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+            <div class="field-wrap">
+              <span class="field-icon" aria-hidden="true">🎯</span>
+              <textarea
+                id="inputGoal"
+                name="goal"
+                placeholder="e.g. Lose 10kg before my wedding, build lean muscle, get fitter for cricket..."
+                style="padding-left:42px"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goStep(1)" aria-label="Go back to step 1">← Back</button>
+          <button class="btn-next" id="nextBtn2" onclick="goStep(3)" aria-label="Continue to review">
+            Review Booking <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: Review & Submit ── -->
+      <div class="form-step" id="step3" aria-label="Step 3: Review and confirm">
+        <div class="step-heading">
+          <h2>Confirm your booking.</h2>
+          <p>Everything look right? Hit confirm and we'll see you soon.</p>
+        </div>
+
+        <div class="review-section">
+          <div class="review-section-title">Personal Details</div>
+          <div class="review-row">
+            <span class="review-key">Name</span>
+            <span class="review-val" id="reviewName">—</span>
+          </div>
+          <div class="review-row">
+            <span class="review-key">Email</span>
+            <span class="review-val" id="reviewEmail">—</span>
+          </div>
+          <div class="review-row">
+            <span class="review-key">Phone</span>
+            <span class="review-val" id="reviewPhone">—</span>
+          </div>
+        </div>
+
+        <div class="review-section">
+          <div class="review-section-title">Visit Preferences</div>
+          <div class="review-row">
+            <span class="review-key">Time Slot</span>
+            <span class="review-val" id="reviewTime">—</span>
+          </div>
+          <div class="review-row">
+            <span class="review-key">Services</span>
+            <div class="review-val">
+              <div class="review-services-list" id="reviewServices"></div>
+            </div>
+          </div>
+          <div class="review-row" id="reviewGoalRow">
+            <span class="review-key">Goal</span>
+            <span class="review-val" id="reviewGoal">—</span>
+          </div>
+        </div>
+
+        <div class="privacy-note">
+          <span aria-hidden="true">🔒</span>
+          Your information is kept private and used only to process your trial booking. We do not share it with third parties.
+        </div>
+
+        <div class="form-nav">
+          <button class="btn-back" onclick="goStep(2)" aria-label="Go back to step 2">← Back</button>
+          <button class="btn-submit" id="submitBtn" onclick="submitForm()" aria-label="Confirm free trial booking">
+            <span id="submitLabel">Confirm Free Trial</span>
+            <span class="spinner" id="submitSpinner" aria-hidden="true"></span>
+            <span id="submitArrow" aria-hidden="true">✓</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── SUCCESS SCREEN ── -->
+      <div class="success-screen" id="successScreen" aria-live="polite" aria-atomic="true">
+        <div class="success-icon-wrap" aria-hidden="true">🎉</div>
+        <h2>YOU'RE<br><span>BOOKED IN!</span></h2>
+        <p>Check your inbox — a confirmation email is on its way. We can't wait to meet you.</p>
+
+        <div class="success-details" aria-label="Booking confirmation details">
+          <div class="success-detail-row">
+            <span>📧</span>
+            Confirmation sent to
+            <strong id="successEmail"></strong>
+          </div>
+          <div class="success-detail-row">
+            <span>⏰</span>
+            Preferred slot:
+            <strong id="successTime"></strong>
+          </div>
+          <div class="success-detail-row">
+            <span>📍</span>
+            Shiva Fitness Gym, Kaimri Road, Hisar, Haryana
+          </div>
+        </div>
+
+        <div class="success-actions">
+          <a
+            id="whatsappLink"
+            href="https://wa.me/910000000000?text=Hi%20Shiva%20Fitness!"
+            class="btn-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Confirm on WhatsApp"
+          >
+            💬 Also Confirm on WhatsApp
+          </a>
+          <a href="index.html" class="btn-home" aria-label="Return to Shiva Fitness website">← Back to Shiva Fitness</a>
+        </div>
+      </div>
+
+    </div><!-- /form-steps-wrap -->
+  </div><!-- /form-card -->
+
+</main><!-- /page-wrap -->
+
+<!-- Toast notification -->
+<div class="toast" id="toast" role="alert" aria-live="assertive">
+  <span class="toast-icon" id="toastIcon"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<!-- Footer -->
+<footer class="form-footer">
+  <p>© 2026 Shiva Fitness Gym · <a href="index.html">Back to website</a> · <a href="tel:+910000000000">+91 00000 00000</a></p>
+</footer>
+
+<!-- ============================================================
+   SCRIPTS
+   ============================================================ -->
+<script>
+/* ============================================================
+   EmailJS INIT
+   ============================================================ */
+const EJS_PUBLIC_KEY   = '_6V6200RS4YtvTh4S';
+const EJS_SERVICE_ID   = 'service_ieyalgm';
+const EJS_TPL_CUSTOMER = 'template_i2r5zkq';
+const EJS_TPL_OWNER    = 'template_v2amm3r';
+
+try { emailjs.init({ publicKey: EJS_PUBLIC_KEY }); } catch(e) { console.warn('EmailJS init failed:', e); }
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  currentStep: 1,
+  selectedTime: '',
+  name:  '',
+  email: '',
+  phone: '',
+  services: [],
+  goal: '',
+};
+
+/* ============================================================
+   STEP NAVIGATION
+   ============================================================ */
+function goStep(n) {
+  if (n > state.currentStep) {
+    if (!validateStep(state.currentStep)) return;
+  }
+
+  const prev = state.currentStep;
+  state.currentStep = n;
+
+  document.getElementById(`step${prev}`).classList.remove('active');
+  document.getElementById(`step${n}`).classList.add('active');
+
+  updateIndicators();
+  updateProgress();
+
+  if (n === 3) buildReview();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateIndicators() {
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById(`stepDot${i}`);
+    const ind = document.getElementById(`stepInd${i}`);
+    const numEl = dot.querySelector('.step-num');
+
+    dot.className = 'step-dot';
+    ind.className = 'step-ind';
+
+    if (i < state.currentStep) {
+      dot.classList.add('done');
+      if (numEl) numEl.style.display = 'none';
+    } else if (i === state.currentStep) {
+      dot.classList.add('active');
+      ind.classList.add('active');
+      if (numEl) numEl.style.display = '';
+    } else {
+      if (numEl) numEl.style.display = '';
+    }
+  }
+
+  const pb = document.querySelector('.progress-track');
+  pb.setAttribute('aria-valuenow', state.currentStep);
+}
+
+function updateProgress() {
+  const fill = document.getElementById('progressFill');
+  const pct = (state.currentStep / 3) * 100;
+  fill.style.width = pct + '%';
+}
+
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+function validateStep(step) {
+  if (step === 1) {
+    let ok = true;
+    if (!validateName())  ok = false;
+    if (!validateEmail()) ok = false;
+    if (!validatePhone()) ok = false;
+    return ok;
+  }
+  if (step === 2) {
+    let ok = true;
+    if (!state.selectedTime) {
+      document.getElementById('time-error').style.display = 'block';
+      ok = false;
+    } else {
+      document.getElementById('time-error').style.display = 'none';
+    }
+    const services = getSelectedServices();
+    if (services.length === 0) {
+      document.getElementById('services-error').style.display = 'block';
+      ok = false;
+    } else {
+      document.getElementById('services-error').style.display = 'none';
+    }
+    return ok;
+  }
+  return true;
+}
+
+function validateName() {
+  const val = document.getElementById('inputName').value.trim();
+  const field = document.getElementById('field-name');
+  if (val.length < 2) {
+    setFieldState(field, 'error');
+    return false;
+  }
+  setFieldState(field, 'valid');
+  state.name = val;
+  return true;
+}
+
+function validateEmail() {
+  const val = document.getElementById('inputEmail').value.trim();
+  const field = document.getElementById('field-email');
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!re.test(val)) {
+    setFieldState(field, 'error');
+    return false;
+  }
+  setFieldState(field, 'valid');
+  state.email = val;
+  return true;
+}
+
+function validatePhone() {
+  const raw = document.getElementById('inputPhone').value.replace(/\D/g,'');
+  const field = document.getElementById('field-phone');
+  if (!/^[6-9]\d{9}$/.test(raw)) {
+    setFieldState(field, 'error');
+    return false;
+  }
+  setFieldState(field, 'valid');
+  state.phone = raw;
+  return true;
+}
+
+function setFieldState(field, status) {
+  field.classList.remove('valid', 'error');
+  if (status) field.classList.add(status);
+}
+
+/* ============================================================
+   LIVE VALIDATION ON BLUR
+   ============================================================ */
+document.getElementById('inputName').addEventListener('blur', validateName);
+document.getElementById('inputEmail').addEventListener('blur', validateEmail);
+document.getElementById('inputPhone').addEventListener('blur', validatePhone);
+
+/* phone: allow only digits, max 10 */
+document.getElementById('inputPhone').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g,'').slice(0,10);
+});
+
+/* ============================================================
+   TIME SLOTS
+   ============================================================ */
+function selectTime(el) {
+  document.querySelectorAll('.time-slot').forEach(s => {
+    s.classList.remove('selected');
+    s.setAttribute('aria-pressed', 'false');
+  });
+  el.classList.add('selected');
+  el.setAttribute('aria-pressed', 'true');
+  state.selectedTime = el.dataset.time;
+  document.getElementById('time-error').style.display = 'none';
+}
+
+/* keyboard for time slots */
+document.querySelectorAll('.time-slot').forEach(slot => {
+  slot.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      selectTime(slot);
+    }
+  });
+});
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+function getSelectedServices() {
+  return [...document.querySelectorAll('.service-check input:checked')].map(i => i.value);
+}
+
+document.querySelectorAll('.service-check input').forEach(cb => {
+  cb.addEventListener('change', () => {
+    state.services = getSelectedServices();
+    if (state.services.length > 0) {
+      document.getElementById('services-error').style.display = 'none';
+    }
+  });
+});
+
+/* ============================================================
+   REVIEW SCREEN
+   ============================================================ */
+function buildReview() {
+  state.services = getSelectedServices();
+  state.goal = document.getElementById('inputGoal').value.trim();
+
+  document.getElementById('reviewName').textContent  = state.name;
+  document.getElementById('reviewEmail').textContent = state.email;
+  document.getElementById('reviewPhone').textContent = '+91 ' + state.phone;
+  document.getElementById('reviewTime').textContent  = state.selectedTime;
+
+  const svcWrap = document.getElementById('reviewServices');
+  svcWrap.innerHTML = '';
+  state.services.forEach(s => {
+    const chip = document.createElement('div');
+    chip.className = 'service-chip';
+    chip.textContent = s;
+    svcWrap.appendChild(chip);
+  });
+
+  const goalRow = document.getElementById('reviewGoalRow');
+  if (state.goal) {
+    document.getElementById('reviewGoal').textContent = state.goal;
+    goalRow.style.display = '';
+  } else {
+    goalRow.style.display = 'none';
+  }
+}
+
+/* ============================================================
+   SUBMIT
+   ============================================================ */
+async function submitForm() {
+  const btn     = document.getElementById('submitBtn');
+  const spinner = document.getElementById('submitSpinner');
+  const label   = document.getElementById('submitLabel');
+  const arrow   = document.getElementById('submitArrow');
+
+  // Re-read all state values from DOM in case blur wasn't triggered
+  state.name  = document.getElementById('inputName').value.trim();
+  state.email = document.getElementById('inputEmail').value.trim();
+  state.phone = document.getElementById('inputPhone').value.replace(/\D/g,'');
+
+  // Final validation guard
+  if (!state.name || !state.email || !state.phone || !state.selectedTime) {
+    showToast('⚠️ Missing required fields. Please go back and check.', 'error');
+    return;
+  }
+
+  // UI: loading state
+  btn.disabled   = true;
+  label.textContent = 'Sending...';
+  spinner.style.display = 'block';
+  arrow.style.display   = 'none';
+
+  const servicesStr = state.services.length > 0 ? state.services.join(', ') : 'Not specified';
+  const now = new Date().toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    dateStyle: 'full',
+    timeStyle: 'short'
+  });
+
+  const customerParams = {
+    to_name:    state.name,
+    to_email:   state.email,
+    time_slot:  state.selectedTime,
+    services:   servicesStr,
+    goal:       state.goal || 'Not specified',
+    phone:      '+91 ' + state.phone,
+    gym_address:'Kaimri Road, Hisar, Haryana',
+    gym_phone:  '+91 00000 00000',
+  };
+
+  const ownerParams = {
+    to_email:     'socialmain2025@gmail.com',
+    lead_name:    state.name,
+    lead_email:   state.email,
+    lead_phone:   '+91 ' + state.phone,
+    time_slot:    state.selectedTime,
+    services:     servicesStr,
+    goal:         state.goal || 'Not specified',
+    submitted_at: now,
+  };
+
+  try {
+    const r1 = await emailjs.send(EJS_SERVICE_ID, EJS_TPL_CUSTOMER, customerParams);
+    console.log('[EmailJS] Customer email sent:', r1.status, r1.text);
+
+    const r2 = await emailjs.send(EJS_SERVICE_ID, EJS_TPL_OWNER, ownerParams);
+    console.log('[EmailJS] Owner email sent:', r2.status, r2.text);
+
+    showSuccess();
+
+  } catch (err) {
+    console.error('[EmailJS] Send failed:', err);
+
+    // Show specific error to help debug
+    const errMsg = err && err.text ? err.text : (err && err.message ? err.message : JSON.stringify(err));
+    showToast('❌ Booking failed: ' + errMsg, 'error');
+
+    // Re-enable the button so user can retry
+    btn.disabled = false;
+    label.textContent = 'Confirm Free Trial';
+    spinner.style.display = 'none';
+    arrow.style.display   = '';
+  }
+}
+
+function showSuccess() {
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'none';
+
+  document.getElementById('successEmail').textContent = state.email;
+  document.getElementById('successTime').textContent  = state.selectedTime;
+
+  const msg = encodeURIComponent(
+    `Hi Shiva Fitness! I'm ${state.name} and I just booked my free trial online for the ${state.selectedTime} slot. Looking forward to meeting Rohit! 💪`
+  );
+  document.getElementById('whatsappLink').href = `https://wa.me/910000000000?text=${msg}`;
+
+  const success = document.getElementById('successScreen');
+  success.style.display = 'block';
+
+  const progressTrack = document.querySelector('.progress-track');
+  const stepIndicators = document.querySelector('.step-indicators');
+  if (progressTrack) progressTrack.style.display = 'none';
+  if (stepIndicators) stepIndicators.style.display = 'none';
+
+  showToast('🎉 Booking confirmed! Check your email.', 'success');
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+let toastTimer;
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  const icon  = document.getElementById('toastIcon');
+  document.getElementById('toastMsg').textContent = msg;
+  if (icon) icon.textContent = type === 'success' ? '✅' : '⚠️';
+  toast.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.className = `toast ${type}`; }, 4000);
+}
+</script>
+
+<!--
+=================================================================
+ 📧 EMAILJS SETUP GUIDE — Read before going live
+=================================================================
+
+  STEP 1: Create free account at https://www.emailjs.com
+  STEP 2: Add an Email Service (Gmail works perfectly)
+          → Use socialmain2025@gmail.com as sender
+          → Note the Service ID
+
+  STEP 3: Create Template 1 — "customer_thankyou"
+  ┌─────────────────────────────────────────────────────────────┐
+  │ To: {{to_email}}                                            │
+  │ Subject: ✅ Your Free Trial at Shiva Fitness is Confirmed! │
+  │                                                             │
+  │ Hi {{to_name}},                                             │
+  │                                                             │
+  │ Your free trial at Shiva Fitness Gym has been booked.       │
+  │ Here are your details:                                      │
+  │                                                             │
+  │ • Preferred Time: {{time_slot}}                             │
+  │ • Services: {{services}}                                    │
+  │ • Your Goal: {{goal}}                                       │
+  │                                                             │
+  │ We'll call you at {{phone}} to confirm the exact day.       │
+  │                                                             │
+  │ 📍 Shiva Fitness Gym, {{gym_address}}                       │
+  │ 📞 {{gym_phone}}                                            │
+  │                                                             │
+  │ See you soon!                                               │
+  │ — Rohit & The Shiva Fitness Team                            │
+  └─────────────────────────────────────────────────────────────┘
+
+  STEP 4: Create Template 2 — "owner_lead"
+  ┌─────────────────────────────────────────────────────────────┐
+  │ To: {{to_email}} (socialmain2025@gmail.com)                 │
+  │ Subject: 🔥 New Free Trial Booking — {{lead_name}}         │
+  │                                                             │
+  │ NEW LEAD FROM WEBSITE                                       │
+  │ ─────────────────────                                       │
+  │ Name:      {{lead_name}}                                    │
+  │ Email:     {{lead_email}}                                   │
+  │ Phone:     {{lead_phone}}                                   │
+  │ Time Slot: {{time_slot}}                                    │
+  │ Services:  {{services}}                                     │
+  │ Goal:      {{goal}}                                         │
+  │ Submitted: {{submitted_at}} (IST)                           │
+  │                                                             │
+  │ → Follow up within 2 hours for best conversion.             │
+  └─────────────────────────────────────────────────────────────┘
+
+  STEP 5: Copy your Public Key from Account → API Keys
+  STEP 6: Replace the 4 constants at top of <script>:
+          EJS_PUBLIC_KEY   → your public key
+          EJS_SERVICE_ID   → your service id
+          EJS_TPL_CUSTOMER → template 1 id
+          EJS_TPL_OWNER    → template 2 id
+
+=================================================================
+-->
+</body>
+</html>
