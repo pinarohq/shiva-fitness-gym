@@ -311,6 +311,7 @@
 
   /* ---------- overlay ---------- */
   var overlayEl = document.getElementById('scene-overlay');
+  var heroOverlayEl = document.getElementById('hero-overlay');
 
   // Per-waypoint overlay opacity (0..1). Applied when that waypoint is active.
   var DB_OVERLAY = [
@@ -338,6 +339,18 @@
     overlayEl.style.opacity = lerp(a, b, t).toFixed(3);
   }
 
+  function updateHeroOverlay() {
+    if (!heroOverlayEl) return;
+    // Hero overlay is active only in section 00 (hero), which spans scroll 0.0 to ~0.083
+    // Start fading in at scroll 0, fade out around scroll 0.083
+    var heroEnd = 1.0 / (N - 1); // ~0.1 (section boundary)
+    if (scrollProgress < heroEnd) {
+      heroOverlayEl.classList.add('hero-active');
+    } else {
+      heroOverlayEl.classList.remove('hero-active');
+    }
+  }
+
   /* ---------- render loop ---------- */
   var clock = new THREE.Clock();
 
@@ -351,6 +364,7 @@
     // Compute scroll targets
     updateDBTargets();
     updateOverlay();
+    updateHeroOverlay();
 
     // Step all springs
     var allSprings = [sp.x, sp.y, sp.rx, sp.ry, sp.rz, sp.s, sp.cz, sp.cx];

@@ -57,6 +57,8 @@
 <!-- 3D hand models are rendered on the canvas — no SVG glyphs needed -->
 <!-- Cinematic overlay: dims the 3D canvas in specific sections to push dumbbell behind content -->
 <div id="scene-overlay" aria-hidden="true"></div>
+<!-- Hero section dark overlay: ensures text is readable over the dumbbell -->
+<div id="hero-overlay" aria-hidden="true"></div>
 
 <div id="sf-root">
 
@@ -83,22 +85,43 @@
     <section class="section hero section--tall" id="s-hero" aria-labelledby="hero-heading">
       <div class="section-inner hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow eyebrow--ice">Kaimri Road · Hisar</p>
-          <h1 class="h-display h-xl" id="hero-heading">Two Decades<br>Of Discipline<br><span style="color:var(--ice)">One Standard</span></h1>
-          <p class="text-muted--lg" style="margin-top:1.75rem">Shiva Fitness Gym was built on one idea: that real strength is earned slowly, under proper guidance, over years — not weeks. Rohit has coached this floor personally for over twenty years.</p>
-          <a href="#s-book" class="btn btn--solid" style="margin-top:2.5rem">
-            Book Your Free Trial
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <p class="eyebrow eyebrow--ice hero-entrance" data-delay="0">Kaimri Road · Hisar</p>
+          <h1 class="h-display h-xl hero-entrance" id="hero-heading" data-delay="1">
+            <span class="hero-line">Two Decades</span><br>
+            <span class="hero-line">Of Discipline</span><br>
+            <span class="hero-line" style="color:var(--ice)">One Standard</span>
+          </h1>
+          <p class="text-muted--lg hero-copy-desktop hero-entrance" data-delay="2">Shiva Fitness Gym was built on one idea: that real strength is earned slowly, under proper guidance, over years — not weeks. Rohit has coached this floor personally for over twenty years.</p>
+          <p class="text-muted--lg hero-copy-mobile hero-entrance" data-delay="2">Real strength earned over years with proper guidance—not weeks. Rohit coaches every step.</p>
+          <a href="#s-book" class="btn btn--solid hero-cta hero-entrance" data-delay="3" aria-label="Book Your Free Trial at Shiva Fitness Gym">
+            <span class="btn-label">Book Your Free Trial</span>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
           </a>
-          <div class="hero-stats">
-            <div><div class="hero-stat-num">20+</div><div class="hero-stat-label">Years Coaching</div></div>
-            <div><div class="hero-stat-num">6</div><div class="hero-stat-label">Days A Week</div></div>
-            <div><div class="hero-stat-num">1:1</div><div class="hero-stat-label">Personal Attention</div></div>
+          <div class="hero-stats hero-entrance" data-delay="4">
+            <div class="hero-stat">
+              <div class="hero-stat-num" data-count="20" data-suffix="+">0</div>
+              <div class="hero-stat-label">Years Coaching</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num" data-count="6">0</div>
+              <div class="hero-stat-label">Days A Week</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num" data-count-text="1:1">—</div>
+              <div class="hero-stat-label">Personal Attention</div>
+            </div>
           </div>
         </div>
-        <div class="hero-side">
-          <p class="editorial" style="font-size:19px;color:var(--text-2)">"Strength isn't rushed here."</p>
+        <div class="hero-side hero-entrance" data-delay="2">
+          <p class="editorial hero-quote" style="font-size:19px;color:var(--text-2)">"Strength isn't rushed here."</p>
         </div>
+      </div>
+      <!-- scroll indicator -->
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="hero-scroll-line"></span>
+        <span class="hero-scroll-text">Scroll</span>
       </div>
     </section>
 
@@ -176,7 +199,7 @@
     <!-- 05 — MEET THE COACH -->
     <section class="section coach section--tall" id="s-coach" aria-labelledby="coach-heading">
       <div class="section-inner coach-grid">
-        <div class="coach-photo reveal" role="img" aria-label="Placeholder for a photograph of Rohit, head coach"></div>
+        <img src="public/trainer.webp" alt="Rohit, head coach at Shiva Fitness Gym" class="coach-photo reveal" width="400" height="533">
         <div class="reveal reveal-delay-1">
           <p class="eyebrow">Meet the coach</p>
           <h2 class="h-display h-lg" id="coach-heading" style="margin-top:1rem">Rohit</h2>

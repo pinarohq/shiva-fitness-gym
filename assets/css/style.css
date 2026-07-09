@@ -156,7 +156,7 @@ html{scroll-behavior:smooth}
   box-shadow:0 1px 0 var(--hairline);
 }
 .nav-logo{
-  font-family:var(--display);font-weight:900;font-size:22px;
+  font-family:var(--display);font-weight:900;font-size:22.4px;
   letter-spacing:.03em;text-transform:uppercase;color:var(--white);
   text-decoration:none;
 }
@@ -216,21 +216,211 @@ html{scroll-behavior:smooth}
 .section--tall{min-height:100vh}
 
 /* ============ 01 HERO ============ */
-.hero{min-height:100vh;padding-top:9rem;align-items:flex-start}
+.hero{min-height:100vh;padding-top:calc(7rem + 10px);padding-bottom:8rem;align-items:flex-start;overflow:hidden}
 .hero-grid{
   display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:end;width:100%;
 }
-.hero-copy .h-xl{margin-top:1rem}
-.hero-stats{
-  display:flex;gap:3rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--hairline);
+
+/* --- entrance animation system --- */
+.hero-entrance{
+  opacity:0;
+  transform:translateY(22px);
 }
-.hero-stat-num{font-family:var(--display);font-size:44px;font-weight:900;line-height:1}
+.hero-entrance.is-ready{
+  transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Stagger delays via data-delay attribute */
+.hero-entrance[data-delay="0"]{transition-delay:.05s}
+.hero-entrance[data-delay="1"]{transition-delay:.18s}
+.hero-entrance[data-delay="2"]{transition-delay:.34s}
+.hero-entrance[data-delay="3"]{transition-delay:.52s}
+.hero-entrance[data-delay="4"]{transition-delay:.72s}
+
+/* --- headline lines --- */
+.hero-line{
+  display:inline-block;
+  will-change:transform;
+  transition:letter-spacing .6s cubic-bezier(.16,1,.3,1);
+}
+.hero-copy:hover .hero-line{
+  letter-spacing:.005em;
+}
+
+/* --- paragraph --- */
+.hero-copy .h-xl{margin-top:1rem}
+.hero-copy p.text-muted--lg{
+  font-size:16px;
+  opacity:0.75;
+  margin-top:1.25rem;
+}
+.hero .eyebrow--ice{
+  opacity:1;
+}
+
+/* --- CTA button premium states --- */
+.hero-cta{
+  position:relative;
+  margin-top:1.8rem;
+  margin-bottom:1.5rem;
+  overflow:hidden;
+  isolation:isolate;
+}
+/* Liquid fill effect on hover */
+.hero-cta::before{
+  content:'';
+  position:absolute;inset:0;
+  background:var(--ice);
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .45s cubic-bezier(.16,1,.3,1);
+  z-index:-1;
+}
+.hero-cta:hover::before{
+  transform:scaleX(1);
+}
+.hero-cta:hover{
+  color:var(--black);
+  border-color:var(--ice);
+}
+.hero-cta .btn-icon svg{
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.hero-cta:hover .btn-icon svg{
+  transform:translateX(5px);
+}
+/* Subtle press effect */
+.hero-cta:active{
+  transform:scale(.97);
+  transition:transform .1s ease;
+}
+
+/* --- stats --- */
+.hero-stats{
+  display:flex;gap:3rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--hairline);
+}
+.hero-stat{
+  position:relative;
+  cursor:default;
+}
+/* Hairline underline accent that grows on hover */
+.hero-stat::after{
+  content:'';
+  position:absolute;bottom:-8px;left:0;
+  width:0;height:1px;
+  background:var(--ice);
+  transition:width .4s cubic-bezier(.16,1,.3,1);
+}
+.hero-stat:hover::after{width:100%}
+.hero-stat:hover .hero-stat-num{
+  color:var(--ice);
+  transition:color .3s ease;
+}
+.hero-stat-num{
+  font-family:var(--display);font-size:44px;font-weight:900;line-height:1;
+  transition:color .3s ease;
+}
 .hero-stat-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-top:6px}
+
+/* --- side quote --- */
 .hero-side{justify-self:end;text-align:right;max-width:280px}
-.hero-glyph{width:64px;height:64px;margin-left:auto;opacity:.8}
+.hero-quote{
+  position:relative;
+  transition:color .4s ease, transform .4s ease;
+  cursor:default;
+}
+.hero-quote::before{
+  content:'"';
+  position:absolute;right:calc(100% + .3em);top:-.1em;
+  font-family:var(--editorial);font-size:2.5em;
+  color:var(--ice);opacity:0;
+  transition:opacity .4s ease, transform .4s ease;
+  transform:translateX(6px);
+}
+.hero-quote:hover{
+  color:var(--white);
+  transform:translateX(-4px);
+}
+.hero-quote:hover::before{
+  opacity:.35;
+  transform:translateX(0);
+}
+
+/* --- scroll hint --- */
+.hero-scroll-hint{
+  position:absolute;
+  bottom:2.5rem;left:var(--edge);
+  display:flex;align-items:center;gap:.75rem;
+  opacity:0;
+  transition:opacity .6s ease 1.4s;
+}
+.hero-scroll-hint.is-ready{opacity:.45}
+.hero-scroll-hint:hover{opacity:.9}
+.hero-scroll-line{
+  display:block;
+  width:28px;height:1px;
+  background:var(--steel);
+  position:relative;
+  overflow:hidden;
+}
+.hero-scroll-line::after{
+  content:'';
+  position:absolute;inset:0;
+  background:var(--ice);
+  transform:translateX(-100%);
+  animation:scrollPulse 2s ease-in-out 1.6s infinite;
+}
+@keyframes scrollPulse{
+  0%{transform:translateX(-100%)}
+  50%{transform:translateX(0)}
+  100%{transform:translateX(100%)}
+}
+.hero-scroll-text{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--steel);font-family:var(--body);
+}
+
+/* --- mouse-parallax layer (driven by JS) --- */
+.hero-copy{
+  will-change:transform;
+  transition:transform .08s linear;
+}
+
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr}
   .hero-side{justify-self:start;text-align:left;margin-top:2rem}
+  .hero-scroll-hint{display:none}
+  .hero-quote::before{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-entrance{opacity:1;transform:none}
+  .hero-entrance.is-ready{transition:none}
+  .hero-cta::before{transition:none}
+  .hero-scroll-line::after{animation:none}
+  .hero-copy{transition:none}
+}
+
+/* ---- desktop-only hero adjustments (min-width: 901px) ---- */
+@media (min-width:901px){
+  /* Reduce headline size — tighten the max clamp value */
+  .hero-copy .h-xl{
+    font-size:clamp(56px, 8vw, 112px);
+  }
+  /* Less gap between CTA and stats */
+  .hero-cta{
+    margin-bottom:0.5rem;
+  }
+  /* Pull stats closer to CTA */
+  .hero-stats{
+    margin-top:2rem;
+    padding-top:1.75rem;
+  }
+  /* Reduce bottom padding so stats line is just visible on first load */
+  .hero{
+    padding-bottom:4rem;
+  }
 }
 
 /* ============ 02 WHY PEOPLE STAY ============ */
@@ -305,11 +495,10 @@ html{scroll-behavior:smooth}
   aspect-ratio:3/4;
   background:linear-gradient(160deg,#1c1c1c,#080808 70%);
   border:1px solid var(--hairline);position:relative;
-}
-.coach-photo::before{
-  content:'Photograph — Rohit';
-  position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.25rem;
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);
+  width:100%;
+  height:auto;
+  object-fit:cover;
+  object-position:center;
 }
 .coach-meta{display:flex;gap:2.5rem;margin-top:2rem}
 .coach-meta-num{font-family:var(--display);font-size:34px;font-weight:900}
@@ -432,6 +621,40 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--ice);outline-offse
   background:#050505;
   opacity:0;
   transition:opacity .7s cubic-bezier(.16,1,.3,1);
+}
+
+/* -------- hero dark overlay -------- */
+/* Sits above canvas (z:10), below hero text (z:20).
+   Ensures headline and CTA are readable over the dumbbell at hero. */
+#hero-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  pointer-events:none;
+  z-index:12;
+  background:#050505;
+  opacity:0;
+  transition:opacity .7s cubic-bezier(.16,1,.3,1);
+}
+#hero-overlay.hero-active{
+  opacity:0.7;
+}
+
+/* -------- hero responsive copy -------- */
+.hero-copy-mobile{
+  display:none;
+}
+.hero-copy-desktop{
+  display:block;
+}
+
+/* Mobile: max-width 768px */
+@media (max-width:768px){
+  .hero-copy-desktop{
+    display:none;
+  }
+  .hero-copy-mobile{
+    display:block;
+  }
 }
 
 /* -------- nav scrolled state -------- */
